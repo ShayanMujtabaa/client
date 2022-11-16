@@ -12,6 +12,8 @@ const ItemsPage = () => {
 
   const [addEditModalVisibility, setAddEditModalVisibility] = useState(false)
 
+  const [editingItem, setEditingItem] = useState(null)
+
   const dispatch = useDispatch()
   const getAllItems = () => {
     dispatch({ type: 'showLoading' })
@@ -50,8 +52,11 @@ const ItemsPage = () => {
       title: 'Action',
       dataIndex: 'id',
       render: (id, record) => <div className='d-flex'>
+        <EditOutlined className='mx-2' onClick={() => {
+          setEditingItem(record)
+          setAddEditModalVisibility(true)
+        }} />
         <DeleteOutlined className='mx-2' />
-        <EditOutlined className='mx-2' />
       </div>
     }
   ]
@@ -62,18 +67,36 @@ const ItemsPage = () => {
 
   const onFinish = (values) => {
     dispatch({ type: 'showLoading' })
-    axios
-      .post('/api/items/add-item', values).then((response) => {
-        dispatch({ type: 'hideLoading' })
-        message.success('Item added successfully')
-        setAddEditModalVisibility(false)
-        getAllItems()
-      })
-      .catch((error) => {
-        dispatch({ type: 'hideLoading' })
-        message.error('Something went wrong while adding the item')
-        console.log(error)
-      })
+    if (editingItem === null) {
+      axios
+        .post('/api/items/add-item', values).then((response) => {
+          dispatch({ type: 'hideLoading' })
+          message.success('Item added successfully')
+          setAddEditModalVisibility(false)
+          getAllItems()
+        })
+        .catch((error) => {
+          dispatch({ type: 'hideLoading' })
+          message.error('Something went wrong while adding the item')
+          console.log(error)
+        })
+    }
+    else {
+      axios
+        .post('/api/items/edit-item', { ...values, itemId: editingItem._id })
+        .then((response) => {
+          dispatch({ type: 'hideLoading' })
+          message.success('Item edited successfully')
+          setEditingItem(null)
+          setAddEditModalVisibility(false)
+          getAllItems()
+        })
+        .catch((error) => {
+          dispatch({ type: 'hideLoading' })
+          message.error('Something went wrong while editing the item')
+          console.log(error)
+        })
+    }
   }
 
   return (
@@ -86,40 +109,47 @@ const ItemsPage = () => {
       <Table columns={columns} dataSource={itemsData} bordered />
 
 
-      <Modal onCancel={() => setAddEditModalVisibility(false)} open={addEditModalVisibility} title='Add New Item' footer={false}>
-        <Form layout='vertical' onFinish={onFinish}>
+      {addEditModalVisibility && (
 
-          <Form.Item name='id' label='Id'>
-            <Input placeholder='Insert a unique item id' type='number' />
-          </Form.Item>
+        <Modal onCancel={() => {
+          setEditingItem(null)
+          setAddEditModalVisibility(false)
+        }} open={addEditModalVisibility} title={`${editingItem !== null ? 'Edit Item' : 'Add New Item'}`} footer={false}>
+          <Form initialValues={editingItem} layout='vertical' onFinish={onFinish}>
 
-          <Form.Item name='name' label='Name'>
-            <Input placeholder='Insert item name' />
-          </Form.Item>
+            <Form.Item name='id' label='Id'>
+              <Input placeholder='Insert a unique item id' type='number' />
+            </Form.Item>
 
-          <Form.Item name='price' label='Price'>
-            <Input placeholder='Insert item price' type='number' />
-          </Form.Item>
+            <Form.Item name='name' label='Name'>
+              <Input placeholder='Insert item name' />
+            </Form.Item>
 
-          <Form.Item name='image' label='Image URL'>
-            <Input placeholder='Insert image URL' />
-          </Form.Item>
+            <Form.Item name='price' label='Price'>
+              <Input placeholder='Insert item price' type='number' />
+            </Form.Item>
 
-          <Form.Item name='category' label='Category'>
-            <Select placeholder='Select category'>
-              <Select.Option value='Burgers'>Burgers</Select.Option>
-              <Select.Option value='Pizza'>Pizza</Select.Option>
-              <Select.Option value='Add-Ons'>Add-Ons</Select.Option>
-              <Select.Option value='Drinks'>Drinks</Select.Option>
-            </Select>
-          </Form.Item>
+            <Form.Item name='image' label='Image URL'>
+              <Input placeholder='Insert image URL' />
+            </Form.Item>
 
-          <div className="d-flex justify-content-end">
-            <Button htmlType='submit' type='primary'>Submit</Button>
-          </div>
+            <Form.Item name='category' label='Category'>
+              <Select placeholder='Select category'>
+                <Select.Option value='Burgers'>Burgers</Select.Option>
+                <Select.Option value='Pizza'>Pizza</Select.Option>
+                <Select.Option value='Add-Ons'>Add-Ons</Select.Option>
+                <Select.Option value='Drinks'>Drinks</Select.Option>
+              </Select>
+            </Form.Item>
 
-        </Form>
-      </Modal>
+            <div className="d-flex justify-content-end">
+              <Button htmlType='submit' type='primary'>Submit</Button>
+            </div>
+
+          </Form>
+        </Modal>
+
+      )}
 
     </DefaultLayout>
 
