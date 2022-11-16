@@ -8,7 +8,8 @@ import {
   DoubleRightOutlined,
   ShoppingCartOutlined
 } from '@ant-design/icons';
-import { Layout, Menu } from 'antd';
+import { Layout, Menu, Image } from 'antd';
+import logo from '../resources/iTech-Logo.png'
 import React, { useEffect, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -32,8 +33,8 @@ const HPLayout = (props) => {
       )}
       <Sider trigger={null} collapsible collapsed={collapsed} >
         <div className="logo">
-          <h3>
-            ITech POS
+        <h3>
+          <Image src={logo} alt='' preview={false}/>
           </h3>
         </div>
         <Menu
