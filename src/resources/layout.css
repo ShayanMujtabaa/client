@@ -57,7 +57,7 @@
   font-weight: bold;
   font-size: 22px;
   padding: 15px;
-  padding-bottom: 60px;
+  padding-bottom: 45px;
 }
 
 .ant-menu-item-selected {
@@ -69,11 +69,7 @@
   background: #fff;
   border-radius: 5px !important;
   text-align: center;
-  margin: 0;
-  position: absolute;
-  top: 155px;
-  left: 50%;
-  transform: translate(-50%, -50%);
+  margin-left: 6%;
 
 }
 
