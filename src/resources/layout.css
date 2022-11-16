@@ -1,0 +1,101 @@
+#components-layout-demo-custom-trigger .trigger {
+  padding: 0 24px;
+  font-size: 18px;
+  line-height: 64px;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#components-layout-demo-custom-trigger .trigger:hover {
+  color: #1890ff;
+}
+
+#components-layout-demo-custom-trigger .logo {
+  height: 32px;
+  margin: 16px;
+  background: rgba(255, 255, 255, 0.3);
+}
+
+.site-layout .site-layout-background {
+  background: #fff;
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 5px !important;
+}
+
+.ant-layout-has-sider {
+  padding: 15px !important;
+}
+
+.ant-layout-sider-children {
+  padding-top: 15px !important;
+  padding-right: 20px !important;
+  height: 95vh;
+}
+
+.ant-layout-sider {
+  border-radius: 10px !important;
+}
+
+.anticon svg {
+  height: 20px;
+  width: 20px;
+  font-size: 20px;
+}
+
+.ant-layout-header {
+  margin: 0 10px;
+  border-radius: 5px !important;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.logo h3 {
+  color: rgb(11, 175, 156);
+  text-align: left;
+  margin-left: 5px;
+  font-weight: bold;
+  font-size: 22px;
+  padding: 15px;
+  padding-bottom: 60px;
+}
+
+.ant-menu-item-selected {
+  background-color: rgb(11, 175, 156) !important;
+  border-radius: 0 8px 8px 0;
+}
+
+.cart-comp {
+  background: #fff;
+  border-radius: 5px !important;
+  text-align: center;
+  margin: 0;
+  position: absolute;
+  top: 155px;
+  left: 50%;
+  transform: translate(-50%, -50%);
+
+}
+
+.cart-comp-sider {
+  background: #fff;
+  box-shadow: 0 0 3px #ccc;
+  border-radius: 5px !important;
+  text-align: center;
+}
+
+.cart-count {
+  cursor: pointer;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.spinner-border {
+  height: 100px;
+  width: 100px;
+}
